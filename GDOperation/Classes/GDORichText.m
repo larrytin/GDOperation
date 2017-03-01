@@ -247,7 +247,7 @@
   }
   if (attributes.size.length || attributes.font.length) {
 //    UIFont *font = [self.attributedText attribute:NSFontAttributeName atIndex:<#(NSUInteger)location#> effectiveRange:nil];
-    UIFont *font = [UIFont fontWithName:attributes.font.length ? attributes.font : @"Helvetica" size:attributes.size.floatValue ? : 12];
+    UIFont *font = [UIFont fontWithName:attributes.font.length ? attributes.font : @"Helvetica" size:[self _sizeFromString:attributes.size]];
     attrs[NSFontAttributeName] = font;
   }
   if (attributes.link.length) {
@@ -299,22 +299,22 @@
   for (NSString *key in extras) {
     NSString *value = extras[key];
     if ([key isEqualToString:@"maximumLineHeight"]) {
-      paragraph.maximumLineHeight = value.floatValue;
+      paragraph.maximumLineHeight = [self _valueFromString:value];
       hasChange = YES;
     } else if ([key isEqualToString:@"minimumLineHeight"]) {
-      paragraph.minimumLineHeight = value.floatValue;
+      paragraph.minimumLineHeight = [self _valueFromString:value];
       hasChange = YES;
     } else if ([key isEqualToString:@"lineSpacing"]) {
-      paragraph.lineSpacing = value.floatValue;
+      paragraph.lineSpacing = [self _valueFromString:value];
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacing"]) {
-      paragraph.paragraphSpacing = value.floatValue;
+      paragraph.paragraphSpacing = [self _valueFromString:value];
       hasChange = YES;
     } else if ([key isEqualToString:@"lineHeightMultiple"]) {
-      paragraph.lineHeightMultiple = value.floatValue;
+      paragraph.lineHeightMultiple = [self _valueFromString:value];
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacingBefore"]) {
-      paragraph.paragraphSpacingBefore = value.floatValue;
+      paragraph.paragraphSpacingBefore = [self _valueFromString:value];
       hasChange = YES;
     }
   }
@@ -377,6 +377,22 @@
                                     lroundf(r * 255),
                                     lroundf(g * 255),
                                     lroundf(b * 255)];
+}
+
+- (CGFloat)_valueFromString:(NSString *)value {
+  CGFloat f_value;
+  if ([value hasSuffix:@"px"]) {
+    f_value = [[value substringToIndex:value.length - @"px".length] floatValue];
+  }
+  return f_value;
+}
+
+- (CGFloat)_sizeFromString:(NSString *)size {
+  CGFloat fontSize = 12;
+  if ([size hasSuffix:@"px"]) {
+    fontSize = [[size substringToIndex:size.length - @"px".length] floatValue];
+  }
+  return fontSize;
 }
 
 - (NSString *)_sizeStringFromNumber:(CGFloat)size {

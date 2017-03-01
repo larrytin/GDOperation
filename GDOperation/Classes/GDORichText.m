@@ -296,25 +296,30 @@
     }
   }
   NSMutableDictionary<NSString *, NSString *> *extras = attributes.extras;
+  
   for (NSString *key in extras) {
     NSString *value = extras[key];
+    CGFloat f_value;
+    if (![self _value:&f_value fromString:value attributeName:key]) {
+      continue;
+    }
     if ([key isEqualToString:@"maximumLineHeight"]) {
-      paragraph.maximumLineHeight = [self _valueFromString:value];
+      paragraph.maximumLineHeight = f_value;
       hasChange = YES;
     } else if ([key isEqualToString:@"minimumLineHeight"]) {
-      paragraph.minimumLineHeight = [self _valueFromString:value];
+      paragraph.minimumLineHeight = f_value;
       hasChange = YES;
     } else if ([key isEqualToString:@"lineSpacing"]) {
-      paragraph.lineSpacing = [self _valueFromString:value];
+      paragraph.lineSpacing = f_value;
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacing"]) {
-      paragraph.paragraphSpacing = [self _valueFromString:value];
+      paragraph.paragraphSpacing = f_value;
       hasChange = YES;
     } else if ([key isEqualToString:@"lineHeightMultiple"]) {
-      paragraph.lineHeightMultiple = [self _valueFromString:value];
+      paragraph.lineHeightMultiple = f_value;
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacingBefore"]) {
-      paragraph.paragraphSpacingBefore = [self _valueFromString:value];
+      paragraph.paragraphSpacingBefore = f_value;
       hasChange = YES;
     }
   }
@@ -379,12 +384,13 @@
                                     lroundf(b * 255)];
 }
 
-- (CGFloat)_valueFromString:(NSString *)value {
-  CGFloat f_value;
-  if ([value hasSuffix:@"px"]) {
-    f_value = [[value substringToIndex:value.length - @"px".length] floatValue];
+- (BOOL)_value:(CGFloat *)value fromString:(NSString *)string attributeName:(NSString *)attributeName {
+  BOOL isValid;
+  if ([string hasSuffix:@"px"]) {
+    *value = [[string substringToIndex:string.length - @"px".length] floatValue];
+    isValid = YES;
   }
-  return f_value;
+  return isValid;
 }
 
 - (CGFloat)_sizeFromString:(NSString *)size {

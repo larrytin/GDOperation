@@ -220,10 +220,10 @@
         float spacing = op.attributes.width.floatValue; // 间隔
         if (spacing > 0) {
           unichar objectReplacementChar = 0xFFFC;
-          NSAttributedString * placeholder = [[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:&objectReplacementChar length:1] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:0]}];
+          NSAttributedString * placeholder = [[NSAttributedString alloc] initWithString:[NSString stringWithCharacters:&objectReplacementChar length:1] attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:.1]}]; // iOS 9如果设置font-size为0，则spacing不生效
           [self.attributedText insertAttributedString:placeholder atIndex:cursor];
           [self.attributedText addAttribute:NSKernAttributeName
-                                      value:@(spacing)
+                                      value:@(spacing - 0.1)
                                       range:NSMakeRange(cursor, 1)];
           cursor += 1;
         }
@@ -247,7 +247,7 @@
   }
   if (attributes.size.length || attributes.font.length) {
 //    UIFont *font = [self.attributedText attribute:NSFontAttributeName atIndex:<#(NSUInteger)location#> effectiveRange:nil];
-    UIFont *font = [UIFont fontWithName:attributes.font.length ? attributes.font : @"Helvetica" size:[self _sizeFromString:attributes.size]];
+    UIFont *font = [UIFont fontWithName:attributes.font.length ? attributes.font : @"Helvetica" size:attributes.size.floatValue ? : 12];
     attrs[NSFontAttributeName] = font;
   }
   if (attributes.link.length) {
@@ -299,22 +299,22 @@
   for (NSString *key in extras) {
     NSString *value = extras[key];
     if ([key isEqualToString:@"maximumLineHeight"]) {
-      paragraph.maximumLineHeight = [self _sizeFromString:value];
+      paragraph.maximumLineHeight = value.floatValue;
       hasChange = YES;
     } else if ([key isEqualToString:@"minimumLineHeight"]) {
-      paragraph.minimumLineHeight = [self _sizeFromString:value];
+      paragraph.minimumLineHeight = value.floatValue;
       hasChange = YES;
     } else if ([key isEqualToString:@"lineSpacing"]) {
-      paragraph.lineSpacing = [self _sizeFromString:value];
+      paragraph.lineSpacing = value.floatValue;
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacing"]) {
-      paragraph.paragraphSpacing = [self _sizeFromString:value];
+      paragraph.paragraphSpacing = value.floatValue;
       hasChange = YES;
     } else if ([key isEqualToString:@"lineHeightMultiple"]) {
-      paragraph.lineHeightMultiple = [self _sizeFromString:value];
+      paragraph.lineHeightMultiple = value.floatValue;
       hasChange = YES;
     } else if ([key isEqualToString:@"paragraphSpacingBefore"]) {
-      paragraph.paragraphSpacingBefore = [self _sizeFromString:value];
+      paragraph.paragraphSpacingBefore = value.floatValue;
       hasChange = YES;
     }
   }
@@ -377,14 +377,6 @@
                                     lroundf(r * 255),
                                     lroundf(g * 255),
                                     lroundf(b * 255)];
-}
-
-- (CGFloat)_sizeFromString:(NSString *)size {
-  CGFloat fontSize = 12;
-  if ([size hasSuffix:@"px"]) {
-    fontSize = [[size substringToIndex:size.length - @"px".length] floatValue];
-  }
-  return fontSize;
 }
 
 - (NSString *)_sizeStringFromNumber:(CGFloat)size {

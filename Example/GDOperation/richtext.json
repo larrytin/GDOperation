@@ -1,0 +1,58 @@
+{
+  "ops": [
+          {
+          "attributes": {
+          "font": "inconsolata"
+          },
+          "insert": "2017-03-23 12:23"
+          },
+          {
+          "attributes": {
+          "align": "center"
+          },
+          "insert": "\n"
+          },
+          {
+          "attributes": {
+          "font": "inconsolata"
+          },
+          "insert": "  您申请的超级直播认证申请未通过，如果有疑问可以联系管理员，未通过原因：不行啊这个"
+          },
+          {
+          "attributes": {
+          "align": "left"
+          },
+          "insert": "\n"
+          },
+          {
+          "insertEmbed": {
+          "space": true
+          },
+          "attributes": {
+          "height": "430"
+          }
+          },
+          {
+          "attributes": {
+          "align": "center"
+          },
+          "insert": "\n"
+          },
+          {
+          "insertEmbed": {
+          "image": "http://puui.qpic.cn/vcolumn_pic/0/e069a8fb53be80b9626ae328c6da3de6T1493878038.png/0"
+          },
+          "attributes": {
+          "width": "150px",
+          "height": "36px",
+          "link": "txlive://views/WebView?url=https://m.v.qq.com/app/live/authentication/index.html"
+          }
+          },
+          {
+          "attributes": {
+          "align": "center"
+          },
+          "insert": "\n"
+          }
+          ]
+}

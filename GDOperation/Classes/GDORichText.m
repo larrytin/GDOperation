@@ -24,7 +24,7 @@ static const char kAttachmentKey = 0;
   self = [super init];
   if (self) {
     _label = label;
-    _attributedText = label.attributedText.mutableCopy?label.attributedText.mutableCopy:[NSMutableAttributedString new];
+    _attributedText = label.attributedText.mutableCopy?:[NSMutableAttributedString new];
     if (!_attributedText.length) { // 所有的delta以\n结尾
       self.setText(@"\n");
     }

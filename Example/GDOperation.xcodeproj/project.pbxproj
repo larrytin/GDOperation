@@ -268,7 +268,7 @@
 				ORGANIZATIONNAME = "Larry Tin";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = 742YX7Q977;
+						DevelopmentTeam = JUE47FVWZ6;
 					};
 					6003F5AD195388D20070C39A = {
 						LastSwiftMigration = 0810;
@@ -501,12 +501,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 742YX7Q977;
+				DEVELOPMENT_TEAM = JUE47FVWZ6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GDOperation/GDOperation-Prefix.pch";
 				INFOPLIST_FILE = "GDOperation/GDOperation-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = com.goodow.realtime.GDOperation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.goodow.realtime.GDOperation1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -518,12 +518,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = 742YX7Q977;
+				DEVELOPMENT_TEAM = JUE47FVWZ6;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GDOperation/GDOperation-Prefix.pch";
 				INFOPLIST_FILE = "GDOperation/GDOperation-Info.plist";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = com.goodow.realtime.GDOperation;
+				PRODUCT_BUNDLE_IDENTIFIER = com.goodow.realtime.GDOperation1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

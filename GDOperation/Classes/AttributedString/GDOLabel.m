@@ -99,24 +99,40 @@ static const char kRichTextKey = 0;
 }
 
 + (NSAttributedString *)createImageEmbed:(GDOPBDelta_Operation *)op downloadCompletionHandler:(void (^)())completionHandler {
+// 图片string 判断图片string的前缀
   NSString *imageString = op.insertEmbed.image;
+  BOOL PicRelativePathExist = [imageString hasPrefix:@"file://"];
+//  BOOL PicAbsolutePathExist = [imageString hasPrefix:@"file:///"];
   NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-  UIImage *image = [UIImage imageNamed:imageString];
-  if (image) {
+  
+  if (PicRelativePathExist) {
+    //删掉绝对路径中图片的前缀
+    [imageString stringByReplacingOccurrencesOfString:@"file://" withString:@""];
+    UIImage *image = [UIImage imageNamed:imageString];
     textAttachment.image = image;
-  } else {
-    NSURL *url = [NSURL URLWithString:imageString];
-    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-          return;
-        }
-        textAttachment.image = [UIImage imageWithData:data];
-        if (completionHandler) {
-          completionHandler();
-        }
-    }];
-    [task resume];
   }
+//  else if (PicAbsolutePathExist){//相对路径
+//    [imageString stringByReplacingOccurrencesOfString:@"file:///" withString:@""];
+//    UIImage *image = [UIImage imageWithContentsOfFile:imageString];
+//    textAttachment.image = image;
+//  }
+  else{
+      NSURL *url = [NSURL URLWithString:imageString];
+      NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+          if (error) {
+              return;
+          }
+          textAttachment.image = [UIImage imageWithData:data];
+          if (completionHandler) {
+              completionHandler();
+          }
+      }];
+      [task resume];
+  }
+ 
+  
+
+
   CGFloat width = [GDOAttributedStringUtil sizeFromString:op.attributes.width];
   CGFloat height = [GDOAttributedStringUtil sizeFromString:op.attributes.height];
   if (width && height) {

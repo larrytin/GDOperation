@@ -101,14 +101,22 @@ static const char kRichTextKey = 0;
 + (NSAttributedString *)createImageEmbed:(GDOPBDelta_Operation *)op downloadCompletionHandler:(void (^)())completionHandler {
 // 图片string 判断图片string的前缀
   NSString *imageString = op.insertEmbed.image;
-  BOOL PicExist = [imageString hasPrefix:@"LocalImage:"];
+  BOOL PicRelativePathExist = [imageString hasPrefix:@"file://"];
+//  BOOL PicAbsolutePathExist = [imageString hasPrefix:@"file:///"];
   NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-  if (PicExist) {
-    //删掉本地路径中图片的前缀
-    [imageString stringByReplacingOccurrencesOfString:@"LocalImage:" withString:@""];
+  
+  if (PicRelativePathExist) {
+    //删掉绝对路径中图片的前缀
+    [imageString stringByReplacingOccurrencesOfString:@"file://" withString:@""];
     UIImage *image = [UIImage imageNamed:imageString];
     textAttachment.image = image;
-  }else{
+  }
+//  else if (PicAbsolutePathExist){//相对路径
+//    [imageString stringByReplacingOccurrencesOfString:@"file:///" withString:@""];
+//    UIImage *image = [UIImage imageWithContentsOfFile:imageString];
+//    textAttachment.image = image;
+//  }
+  else{
       NSURL *url = [NSURL URLWithString:imageString];
       NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:[NSURLRequest requestWithURL:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
           if (error) {
